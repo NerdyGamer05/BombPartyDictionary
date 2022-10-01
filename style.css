@@ -8,14 +8,19 @@ h1 {
   padding: 10px;
 }
 
+label {
+  color: white;
+  font-family: "Lucida Console", "Courier New", monospace;
+  text-shadow: 2px 2px black;
+}
+
 #main {
-  margin: 25px;
   border: 2px solid black;
   background-color: #185ec7;
   border-radius: 12px;
   font-size: 24px;
   text-align: center;
-  padding-top: 10%;
+  padding-top: 1%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -23,9 +28,10 @@ h1 {
 .search {
   border: 2px solid black;
   font-family: sans-serif;
+  margin-top: 0.5%;
+  margin-bottom: 1%;
 }
 
 #output {
-  font-style: italic;
   font-size: 20px;
 }

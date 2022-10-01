@@ -1,30 +1,41 @@
+const input = document.querySelector('input');
+
+input.addEventListener('input', displayWords);
+
 async function displayWords(syllable) {
+  syllable = syllable.target.value.replace(/\s/g, '').toLowerCase();
+  
+  if (syllable === "") {
+    document.getElementById('long').innerHTML = "";
+    return;
+  }
+  
   const words = await fetch('words.txt')
     .then(response => response.text())
     .then(data => data.split('\n'));
   
-  const goodWords = words.filter(x => x.includes(syllable.value) && x.length <= 15 && x.length >= 4).sort((a,b) => b.length - a.length);
-
-  console.log(syllable.value);
+  const goodWords = words.filter(x => x.includes(syllable) && x.length <= 15).sort((a,b) => b.length - a.length);
   
   if (goodWords.length === 0) {
     console.log("Invalid syllable provided.")
-    document.getElementById('outputText').innerText = "Invalid syllable provided."
+    document.getElementById('long').innerText = "Invalid syllable provided."
     return;
   }
   
   const output = [
-    goodWords.slice(0, 20),
-    goodWords.reverse().slice(0, 20)
+    goodWords.slice(0, 500),
+    goodWords.reverse().slice(0, 100)
   ]
+
+  // let shortStr = "";
+  let longStr = "";
   
-  const spaceLen = output[0][0].length;
-  let outputStr = "";
-  
-  for (let i = 0; i < output[0].length; i++) {
-    outputStr += `${output[0][i]}${" ".repeat(spaceLen - output[0][i].length + 10)}${output[1][i]}\n`;
+  for (let i = 0; i < output[0].length - 1; i += 2) {
+    longStr += `${output[0][i]}${'&#160;'.repeat(3)}${output[0][i+1]}\n${'&#160;'.repeat(3)}`;
+    // shortStr += `${output[1][i]}${'&#160;'.repeat(3)}${output[1][i+1]}\n${'&#160;'.repeat(3)}`
   }
 
-  document.getElementById('outputText').innerText = outputStr;
+  // document.getElementById('short').innerHTML = shortStr;
+  document.getElementById('long').innerHTML = longStr;
     
 }
